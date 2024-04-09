@@ -71,24 +71,3 @@ void free_all(struct node* curs) {
     // Base case: free the current node
     free(curs);
 }
-
-int main()
-{
-    char word[50];
-    insert_node("by");
-    insert_node("program");
-    insert_node("programming");
-    insert_node("data structure");
-    insert_node("coding");
-    insert_node("code");
-    printf("Enter the word you would like to search:");
-    fgets(word, sizeof(word), stdin);
-    word[strcspn(word, "\n")] = '\0';
-    if (search(word) != -1) {
-        printf("The word is present in the trie at level: %d\n", search(word));
-    } else {
-        printf("The word is not present in the trie\n");
-    }
-    free_all(root);
-    return 0;
-}
