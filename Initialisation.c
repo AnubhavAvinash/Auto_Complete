@@ -13,15 +13,5 @@ int* initialisation(char fileName[]){
         insert_node(word); // Insert each word into the trie
     }
     fclose(file);
-    return NULL; // Return NULL or any other appropriate value
-}
-
-int main()
-{
-    char fileName[18] = "filtered_words.txt";
-    initialisation(fileName);
-    // Here you can use the trie functions as needed, for example:
-    int searchResult = search("example");
-    printf("Search result: %d\n", searchResult);
-    return 0;
+    return root; // Returning a reference to the ADT
 }
