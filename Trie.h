@@ -1,22 +1,27 @@
 #ifndef TRIE_H
 #define TRIE_H
 
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
 #define ALPHABET_SIZE 26
 
-struct node {
+// Trie node structure
+struct trieNode {
     int data;
-    struct node* link[ALPHABET_SIZE];
+    struct trieNode* children[ALPHABET_SIZE];
+    bool isWordEnd;
 };
 
-extern struct node* root;
+extern struct trieNode* root;
 
-struct node* create_node();
-void insert_node(char key[]);
-int search(char key[]);
-void free_all(struct node* root);
+// Function prototypes
+struct trieNode* create_trieNode();
+
+void insert_trieNode(char key[]);
+
+void free_all(struct trieNode* curs);
 
 #endif // TRIE_H
