@@ -13,6 +13,6 @@ bool isLastNode(struct trieNode* node);
 
 void suggestionsRec(struct trieNode* node, char* currPrefix);
 
-int printAutoSuggestions(const char key[]);
+struct node* AutoSuggestions(const char key[]);
 
 #endif // PREDICTION_H

@@ -5,6 +5,7 @@
 #include "Trie.h" // Include the header file for the trie functions
 #include "Initialisation.h" // Include the header file for the initialisation function
 #include "Prediction.h" // Include the header file for the prediction function
+#include "linkedList.h" // Include the header file for the linked list functions
 
 int main()
 {
@@ -21,10 +22,13 @@ int main()
     for (int i = 0; word[i] != '\0'; i++) {
         word[i] = tolower(word[i]);
     }
-    if (printAutoSuggestions(word) == -1) {
+    if (!printAutoSuggestions(word)) {
         printf("No suggestions found\n");
+    } else {
+        printf("Suggestions:\n");
+        printLinkedlist(head);
     }
-    printf("\n");
     free_all(adtRoot);
+    freeList(&head);
     return 0;
 }

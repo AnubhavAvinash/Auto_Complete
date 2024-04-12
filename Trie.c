@@ -6,7 +6,6 @@
 #define ALPHABET_SIZE 26
 
 struct trieNode {
-    int data;
     struct trieNode* children[ALPHABET_SIZE];
     bool isWordEnd;
 };
@@ -19,7 +18,6 @@ struct trieNode* create_trieNode() {
     for (int x = 0; x < ALPHABET_SIZE; x++) {
         q->children[x] = NULL;
     }
-    q->data = -1;
     return q;
 }
 
@@ -39,7 +37,6 @@ void insert_trieNode(char key[]) {
         q = q->children[index];
     }
     q->isWordEnd = true;
-    q->data = length;
 }
 
 void free_all(struct trieNode* curs) {
