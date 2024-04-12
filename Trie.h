@@ -10,7 +10,6 @@
 
 // Trie node structure
 struct trieNode {
-    int data;
     struct trieNode* children[ALPHABET_SIZE];
     bool isWordEnd;
 };
@@ -21,6 +20,8 @@ extern struct trieNode* root;
 struct trieNode* create_trieNode();
 
 void insert_trieNode(char key[]);
+
+int search(char key[], struct trieNode* head);
 
 void free_all(struct trieNode* curs);
 

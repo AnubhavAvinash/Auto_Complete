@@ -22,7 +22,7 @@ int main()
     for (int i = 0; word[i] != '\0'; i++) {
         word[i] = tolower(word[i]);
     }
-    if (!AutoSuggestions(word)) {
+    if (AutoSuggestions(word) == NULL) {
         printf("No suggestions found\n");
     } else {
         printf("Suggestions:\n");
