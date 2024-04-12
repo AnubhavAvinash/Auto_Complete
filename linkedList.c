@@ -35,10 +35,10 @@ void insertNode(char prediction[]) {
 
 void printLinkedlist(struct node* p) {
     while (p != NULL) {
-        printf("%s ", p->data);
+        printf("%s \n", p->data);
         p = p->next;
     }
-    printf("\n");
+    
 }
 
 void freeList(struct node** head) {

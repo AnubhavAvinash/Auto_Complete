@@ -1,11 +1,11 @@
+#include "Initialisation.h" // Include the header file for the initialisation function
+#include "Prediction.h" // Include the header file for the prediction function
+#include "Trie.h" // Include the header file for the trie functions
+#include "linkedList.h" // Include the header file for the linked list functions
+#include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <ctype.h>
-#include "Trie.h" // Include the header file for the trie functions
-#include "Initialisation.h" // Include the header file for the initialisation function
-#include "Prediction.h" // Include the header file for the prediction function
-#include "linkedList.h" // Include the header file for the linked list functions
 
 int main()
 {
@@ -16,13 +16,13 @@ int main()
         printf("Initialisation failed\n");
         exit(1);
     }
-    printf("Please enter the word you would like auto completed suggestions for: ");    
+    printf("Please enter the word you would like auto completed suggestions for: ");
     fgets(word, sizeof(word), stdin);
     word[strcspn(word, "\n")] = '\0';
     for (int i = 0; word[i] != '\0'; i++) {
         word[i] = tolower(word[i]);
     }
-    if (!printAutoSuggestions(word)) {
+    if (!AutoSuggestions(word)) {
         printf("No suggestions found\n");
     } else {
         printf("Suggestions:\n");
