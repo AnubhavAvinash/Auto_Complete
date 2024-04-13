@@ -2,22 +2,27 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h> // For POSIX getline
 
 // Function to initialize the Trie by reading words from a file
-struct trieNode* initialisation(char fileName[])
-{
-    char word[50];
-    FILE* file = fopen(fileName, "r");
+struct trieNode* initialisation(char fileName[]) {
+    FILE* file = fopen(fileName, "r"); // Open the file for reading
     if (file == NULL) {
         perror("Error in opening file");
         return NULL;
     }
 
-    while (fscanf(file, "%49s", word) != EOF) { // Limit the word length to avoid buffer overflow
+    char* word = NULL; // Dynamic memory allocation for the word
+    size_t len = 0;
+    ssize_t read;
+
+    while ((read = getline(&word, &len, file)) != -1) {
+        // Remove newline character from the word
         word[strcspn(word, "\n")] = '\0';
         insert_trieNode(word); // Insert each word into the trie
     }
 
-    fclose(file);
+    free(word); // Free the allocated memory
+    fclose(file); // Close the file after reading
     return root; // Return the root of the Trie
 }

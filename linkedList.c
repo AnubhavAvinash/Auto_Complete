@@ -2,29 +2,44 @@
 #include <stdlib.h>
 #include <string.h>
 
+// Structure representing a node in the linked list
 struct node {
-    char data[50];
-    struct node* next;
+    char* data; // Pointer to dynamically allocated data
+    struct node* next;      // Pointer to the next node in the linked list
 };
 
+// Global variable to store the head of the linked list
 struct node* head = NULL;
 
-struct node* createNode() {
-    struct node* newNode = (struct node*)malloc(sizeof(struct node));
+// Function to create a new node
+struct node* createNode(const char* data) {
+    struct node* newNode = (struct node*)malloc(sizeof(struct node));  // Allocate memory for the new node
     if (newNode == NULL) {
+        // If memory allocation fails, print an error message and exit the program
         fprintf(stderr, "Failed to allocate memory for new node.\n");
         exit(1);
     }
-    newNode->next = NULL;
+    newNode->data = strdup(data); // Dynamically allocate memory for data
+    if (newNode->data == NULL) {
+        fprintf(stderr, "Failed to allocate memory for node data.\n");
+        free(newNode);
+        exit(1);
+    }
+    newNode->next = NULL;   // Initialize the next pointer of the new node to NULL
     return newNode;
 }
 
-void insertNode(char prediction[]) {
-    struct node* newNode = createNode();
-    strcpy(newNode->data, prediction);
+// Function to insert a new node with given prediction data into the linked list
+void insertNode(const char* prediction) {
+    // Create a new node
+    struct node* newNode = createNode(prediction);
+
+    // Copy the prediction data into the data field of the new node
     if (head == NULL) {
+        // If the linked list is empty, set the new node as the head
         head = newNode;
     } else {
+        // If the linked list is not empty, traverse to the end and append the new node
         struct node* current = head;
         while (current->next != NULL) {
             current = current->next;
@@ -33,21 +48,24 @@ void insertNode(char prediction[]) {
     }
 }
 
+// Function to print all elements of the linked list
 void printLinkedlist(struct node* p) {
+    // Traverse through the linked list and print the data of each node
     while (p != NULL) {
         printf("%s \n", p->data);
         p = p->next;
     }
-    
 }
 
+// Function to free all nodes of the linked list
 void freeList(struct node** head) {
     struct node* tmp;
+    // Traverse through the linked list and free each node
     while (*head != NULL) {
         tmp = *head;
         *head = (*head)->next;
+        free(tmp->data); // Free dynamically allocated data
         free(tmp);
     }
     *head = NULL; // Set head to NULL after freeing all nodes
 }
-

@@ -4,80 +4,73 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h> // For POSIX getline
 
+// Function to check if a given node is the last node in the trie
 bool isLastNode(struct trieNode* node)
 {
     if (node == NULL) {
         return false;
     }
+    // Check if any child node exists for the given node
     for (int i = 0; i < ALPHABET_SIZE; i++) {
         if (node->children[i]) {
             return false;
         }
     }
-    if (node->isWordEnd) {
-        printf("Last node\n");
-        return true;
-    } else {
-        printf("Not a last node\n");
-        return false;
-    }
+    // If the node represents the end of a word, it is considered the last node
+    return node->isWordEnd;
 }
 
-void suggestionsRec(struct trieNode* node, char* currPrefix)
-{
+// Recursive function to generate suggestions for the given prefix
+void suggestionsRec(struct trieNode* node, char* currPrefix, size_t prefixLen) {
+    // If the current node represents the end of a word, insert the current prefix into the suggestion list
     if (node->isWordEnd) {
         insertNode(currPrefix);
     }
 
+    // Traverse through all possible children of the current node
     for (int i = 0; i < ALPHABET_SIZE; i++) {
         if (node->children[i]) {
+            // Calculate the character corresponding to the current child node
             char child = 'a' + i;
-            char* newPrefix = malloc(strlen(currPrefix) + 2); // +2 for the new char and null terminator
-            if (newPrefix == NULL) {
-                fprintf(stderr, "Failed to allocate memory for new prefix.\n");
-                return;
-            }
-            strcpy(newPrefix, currPrefix);
-            newPrefix[strlen(currPrefix)] = child;
-            newPrefix[strlen(currPrefix) + 1] = '\0';
-            suggestionsRec(node->children[i], newPrefix);
-            free(newPrefix); // Free the allocated memory to avoid memory leaks
+            currPrefix[prefixLen] = child;
+            currPrefix[prefixLen + 1] = '\0';
+            suggestionsRec(node->children[i], currPrefix, prefixLen + 1);
         }
     }
 }
 
-struct node* AutoSuggestions(char key[])
+// Function to generate auto suggestions for the given key
+struct node* AutoSuggestions(const char key[])
 {
+    // Initialize the trie node pointer to the root of the trie
     struct trieNode* q = root;
-    int length = strlen(key);
-    int level = 0;
-    if (length < 3) {
-        return head; // Return head if the length of the key is less than 3
-        printf("Word too short\n");
-    }
+    size_t length = strlen(key);
 
-    if (search(key, q) < length) {
+    // If the length of the key is less than 3, return the head of the linked list
+    if (length < 3) {
         return head;
     }
-        
-    for (; level < length; level++) {
-        int index = key[level] - 'a';
-        q = q->children[index];
-    }
 
+    // If the key is not present in the trie, return the head of the linked list
+    if (search(key, &q) < length) {
+        return head;
+    }
+    // If the last node corresponding to the key is a leaf node, insert the key into the suggestion list
     if (isLastNode(q)) {
         insertNode(key);
-        return head; // Return head if the prefix is present as a word but there is no subtree below the last matching node.
+        return head;
     }
 
-    char* prefix = malloc(length + 1); // +1 for the null terminator
+    // Allocate memory for the prefix
+    char* prefix = strdup(key); 
     if (prefix == NULL) {
         fprintf(stderr, "Failed to allocate memory for prefix.\n");
         return head; // Return head in case of memory allocation failure
     }
-    strcpy(prefix, key);
-    suggestionsRec(q, prefix);
+    // Generate suggestions recursively starting from the last node corresponding to the key
+    suggestionsRec(q, prefix, length);
     free(prefix); // Free the allocated memory to avoid memory leaks
     return head; // Return head after printing suggestions
 }
