@@ -19,6 +19,8 @@ struct trieNode* create_trieNode()
     struct trieNode* q = (struct trieNode*)malloc(sizeof(struct trieNode)); // Allocate memory for the new node
     if (q == NULL) {
         perror("Memory allocation failed");
+        free_all(root);
+
         exit(EXIT_FAILURE);
     }
     q->isWordEnd = false; // Initialize isWordEnd flag to false

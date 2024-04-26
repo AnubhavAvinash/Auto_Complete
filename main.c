@@ -28,15 +28,17 @@ int main()
     if (read == -1) {
         perror("Error reading input");
         free(word);
+        free_all(root);
         exit(1);
     }
     word[strcspn(word, "\n")] = '\0'; // Remove newline character from the word
-    //printf("The size of your word is: %ld\n", strlen(word));
-    // Convert the word to lowercase
+    // printf("The size of your word is: %ld\n", strlen(word));
+    //  Convert the word to lowercase
     for (size_t i = 0; word[i] != '\0'; i++) {
         word[i] = tolower(word[i]);
-        if(word[i] < 'a' || word[i] > 'z') {
+        if (word[i] < 'a' || word[i] > 'z') {
             printf("Invalid word\n");
+            free_all(root);
             exit(1);
         }
     }
