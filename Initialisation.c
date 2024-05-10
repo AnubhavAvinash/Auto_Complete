@@ -9,7 +9,7 @@
 // Function to initialize the Trie by reading words from a file
 struct trieNode* initialisation(char fileName[]) {
     FILE* file = fopen(fileName, "r"); // Open the file for reading
-    //assert(file != NULL); // Check if the file was opened successfully
+    assert(file != NULL); // Check if the file was opened successfully
 
     char* word = NULL; // Dynamic memory allocation for the word
     size_t len = 0;
