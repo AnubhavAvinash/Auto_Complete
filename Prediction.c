@@ -5,6 +5,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h> // For POSIX getline
+#include <assert.h> // For assert statements
+
 
 // Function to check if a given node is the last node in the trie
 bool isLastNode(struct trieNode* node)
@@ -63,12 +65,9 @@ struct node* AutoSuggestions(const char key[])
         return head;
     }
 
-    // Allocate memory for the prefix
+    // Allocate memory for the prefix and duplicate the string in key into prefix
     char* prefix = strdup(key); 
-    if (prefix == NULL) {
-        fprintf(stderr, "Failed to allocate memory for prefix.\n");
-        return head; // Return head in case of memory allocation failure
-    }
+    assert(prefix != NULL);
     // Generate suggestions recursively starting from the last node corresponding to the key
     suggestionsRec(q, prefix, length);
     free(prefix); // Free the allocated memory to avoid memory leaks

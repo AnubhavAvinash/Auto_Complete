@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <assert.h> // For assert statements
 
 // Structure representing a node in the linked list
 struct node {
@@ -16,19 +17,9 @@ struct node* head = NULL;
 struct node* createNode(const char* data)
 {
     struct node* newNode = (struct node*)malloc(sizeof(struct node)); // Allocate memory for the new node
-    if (newNode == NULL) {
-        // If memory allocation fails, print an error message and exit the program
-        fprintf(stderr, "Failed to allocate memory for new node.\n");
-        free_all(root);
-        exit(1);
-    }
-    newNode->data = strdup(data); // Dynamically allocate memory for data
-    if (newNode->data == NULL) {
-        fprintf(stderr, "Failed to allocate memory for node data.\n");
-        free(newNode);
-        free_all(root);
-        exit(1);
-    }
+    assert(newNode != NULL);
+    newNode->data = strdup(data); // Dynamically allocate memory for data in newNode and copy the input string into it
+    assert(newNode->data != NULL);
     newNode->next = NULL; // Initialize the next pointer of the new node to NULL
     return newNode;
 }
