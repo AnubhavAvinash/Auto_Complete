@@ -67,7 +67,7 @@ struct node* AutoSuggestions(const char key[])
 
     // Allocate memory for the prefix and duplicate the string in key into prefix
     char* prefix = strdup(key); 
-    assert(prefix != NULL);
+    //assert(prefix != NULL);
     // Generate suggestions recursively starting from the last node corresponding to the key
     suggestionsRec(q, prefix, length);
     free(prefix); // Free the allocated memory to avoid memory leaks

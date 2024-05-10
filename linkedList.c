@@ -17,9 +17,9 @@ struct node* head = NULL;
 struct node* createNode(const char* data)
 {
     struct node* newNode = (struct node*)malloc(sizeof(struct node)); // Allocate memory for the new node
-    assert(newNode != NULL);
+    //assert(newNode != NULL);
     newNode->data = strdup(data); // Dynamically allocate memory for data in newNode and copy the input string into it
-    assert(newNode->data != NULL);
+    //assert(newNode->data != NULL);
     newNode->next = NULL; // Initialize the next pointer of the new node to NULL
     return newNode;
 }

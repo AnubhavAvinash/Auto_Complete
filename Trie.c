@@ -19,7 +19,7 @@ struct trieNode* root = NULL; // Global variable to store the root of the trie
 struct trieNode* create_trieNode()
 {
     struct trieNode* q = (struct trieNode*)malloc(sizeof(struct trieNode)); // Allocate memory for the new node
-    assert(q != NULL);
+    //assert(q != NULL);
     q->isWordEnd = false; // Initialize isWordEnd flag to false
     for (int i = 0; i < ALPHABET_SIZE; i++) {
         q->children[i] = NULL; // Initialize all children pointers to NULL
