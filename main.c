@@ -22,15 +22,18 @@ int main()
     // Prompt the user to enter the word for auto-completion suggestions
     printf("Please enter the word you would like auto completed suggestions for: ");
     read = getline(&word, &len, stdin); // Read the word entered by the user
-    assert(read != -1);
+    if (read == -1) {
+        perror("Error reading input");
+        free(word);
+        exit(1);
+    }
     word[strcspn(word, "\n")] = '\0'; // Remove newline character from the word
     // printf("The size of your word is: %ld\n", strlen(word));
     //  Convert the word to lowercase
     for (size_t i = 0; word[i] != '\0'; i++) {
         word[i] = tolower(word[i]);
-        if (word[i] < 'a' || word[i] > 'z') {
+        if(word[i] < 'a' || word[i] > 'z') {
             printf("Invalid word\n");
-            free_all(root);
             exit(1);
         }
     }
